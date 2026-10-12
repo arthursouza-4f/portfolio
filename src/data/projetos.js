@@ -17,11 +17,12 @@ export const projetos = [
     nome: 'TrainView SP',
     apelido: 'TrainView',
     resumo: 'Mapa 3D dos trilhos de São Paulo, com a posição estimada de cada trem de metrô e CPTM em tempo real.',
-    descricao: null,
-    stack: ['JavaScript', 'Mapas 3D'],
+    descricao:
+      'Mapa 3D da rede sobre trilhos de São Paulo, do Metrô aos trens metropolitanos, com a posição estimada de cada trem em tempo real sobre um mapa de verdade da cidade. As posições saem da tabela oficial de intervalos (GTFS): cada trem acelera, roda e freia entre as estações e para nas plataformas. Dá para buscar estações, favoritar as suas e seguir um trem pela linha.',
+    stack: ['JavaScript', 'MapLibre', 'GTFS'],
     repos: ['train_sp'],
     url: 'https://github.com/arthursouza-4f/train_sp',
-    site: null,
+    site: 'https://trainsp.vercel.app',
     prancha: { casco: '#ffffff', faixa: '#e51f48', tamanho: 1 },
   },
   {
@@ -79,4 +80,4 @@ export const projetos = [
 ];
 
 /** Projetos com espaço (e animação) na seção de projetos, na ordem da página. */
-export const vitrine = ['kiwifit', 'leva', 'clt-pj', 'waxwake'];
+export const vitrine = ['kiwifit', 'leva', 'clt-pj', 'waxwake', 'trainview'];

@@ -211,14 +211,43 @@
 .hero__copy {
   position: relative;
   z-index: 2;
-  padding: clamp(112px, 21vh, 230px) var(--gutter) 0;
-  max-width: min(60vw, 780px);
+  padding: clamp(92px, 17vh, 196px) var(--gutter) 0;
+  max-width: min(60vw, 880px);
+}
+
+/* "bem-vindo" escrito à mão, com uma ondinha azul embaixo */
+.hero__hello {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 clamp(12px, 2vh, 22px) 0.1em;
+  font: 600 clamp(27px, 2.4vw, 36px)/1 var(--font-hand);
+  color: var(--ink-soft);
+  transform: rotate(-3deg);
+  transform-origin: 0 100%;
+}
+
+.hero__hello-wave {
+  position: absolute;
+  left: -3%;
+  bottom: -0.36em;
+  width: 104%;
+  height: 0.34em;
+  overflow: visible;
+  fill: none;
+  stroke: var(--sea);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.hero__hello-wave path {
+  vector-effect: non-scaling-stroke;
 }
 
 .hero__title {
   margin: 0;
   font-weight: 500;
-  font-size: clamp(58px, 8.6vw, 136px);
+  /* o nome inteiro ("Arthur “Tokyo” Souza") cabe numa linha antes da onda */
+  font-size: clamp(48px, 6.2vw, 94px);
   line-height: 0.9;
   letter-spacing: -0.05em;
 }
@@ -237,7 +266,7 @@
 }
 
 .hero__name {
-  font-size: 1.14em;
+  font-size: 1.08em;
   letter-spacing: -0.03em;
   padding-right: 0.08em;
 }
@@ -310,11 +339,11 @@
 
   .hero__copy {
     max-width: none;
-    padding-top: clamp(96px, 15vh, 140px);
+    padding-top: clamp(84px, 12vh, 120px);
   }
 
   .hero__title {
-    font-size: clamp(54px, 16vw, 84px);
+    font-size: clamp(32px, 10.8vw, 84px);
   }
 
   /* a placa de commits ocupa o pé da tela no celular */

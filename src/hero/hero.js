@@ -23,6 +23,8 @@ export function initHero() {
   });
 
   const nav = document.querySelector('[data-intro="nav"]');
+  const hello = hero.querySelector('.hero__hello');
+  const helloWave = hero.querySelector('.hero__hello-wave path');
   const words = hero.querySelectorAll('.hero__word, .hero__name');
   const role = hero.querySelector('.hero__role-text');
   const mark = hero.querySelector('.hero__role-mark');
@@ -36,7 +38,10 @@ export function initHero() {
   const intro = gsap
     .timeline({ defaults: { ease: 'power3.out' } })
     .from(nav, { y: -24, opacity: 0, duration: 0.8 }, 0)
-    .from(words, { yPercent: 115, rotate: 5, duration: 1.1, stagger: 0.09, ease: 'expo.out' }, 0.1)
+    // o "bem-vindo" chega primeiro, meio torto, e a ondinha se desenha embaixo
+    .from(hello, { y: 16, opacity: 0, rotate: -10, duration: 0.75, ease: 'back.out(2.2)' }, 0.05)
+    .from(helloWave, { drawSVG: '0%', duration: 0.8, ease: 'power2.inOut' }, 0.4)
+    .from(words, { yPercent: 115, rotate: 5, duration: 1.1, stagger: 0.09, ease: 'expo.out' }, 0.2)
     .from([role, mark], { y: 18, opacity: 0, duration: 0.7, stagger: 0.08 }, 0.55)
     .from(underline, { drawSVG: '0%', duration: 0.75, ease: 'power2.inOut' }, 1.05)
     // a linha da praia se desenha da esquerda para a direita e o mar ganha vida

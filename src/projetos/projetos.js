@@ -6,6 +6,7 @@ import { createKiwiFit } from './kiwifit.js';
 import { createLeva } from './leva.js';
 import { createCltPj } from './clt-pj.js';
 import { createWaxwake } from './waxwake.js';
+import { createTrainView } from './trainview.js';
 
 /*
  * Seção de projetos: um ladrilho animado e o texto de cada projeto da
@@ -13,7 +14,13 @@ import { createWaxwake } from './waxwake.js';
  * aqui (evento `projeto:ver`) e a animação daquele projeto recomeça.
  */
 
-const factories = { kiwifit: createKiwiFit, leva: createLeva, 'clt-pj': createCltPj, waxwake: createWaxwake };
+const factories = {
+  kiwifit: createKiwiFit,
+  leva: createLeva,
+  'clt-pj': createCltPj,
+  waxwake: createWaxwake,
+  trainview: createTrainView,
+};
 
 const LOCK_ICON =
   '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="2"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>';
