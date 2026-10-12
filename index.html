@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arthur — Desenvolvedor Pleno</title>
+    <meta name="description" content="Portfólio de Arthur Vieira de Souza, desenvolvedor pleno." />
+    <meta name="theme-color" content="#f6f4ee" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <header class="nav" data-intro="nav">
+      <a class="nav__brand" href="#topo" aria-label="Início">
+        arthur<span class="nav__dot">.</span>
+      </a>
+      <nav class="nav__links" aria-label="Seções">
+        <a href="#experiencia">Experiência</a>
+        <a
+          class="btn btn--ink"
+          href="https://br.linkedin.com/in/arthur-vieira-de-souza-11985219a"
+          target="_blank"
+          rel="noopener"
+          >LinkedIn <span aria-hidden="true">↗</span></a
+        >
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="topo" aria-labelledby="hero-title">
+        <svg class="hero__scene" aria-hidden="true"></svg>
+
+        <div class="hero__copy">
+          <h1 class="hero__title" id="hero-title">
+            <span class="hero__line"><span class="hero__word">Eu</span> <span class="hero__word">sou</span></span>
+            <span class="hero__line"><em class="hero__name">Arthur</em></span>
+          </h1>
+          <p class="hero__role">
+            <span class="hero__role-text">Desenvolvedor</span>
+            <span class="hero__role-mark"
+              >Pleno<svg class="hero__underline" viewBox="0 0 200 24" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M4 15 C 40 9, 92 8, 132 11 S 186 16, 196 9" /></svg
+            ></span>
+          </p>
+        </div>
+
+        <a class="hero__scroll" href="#experiencia" aria-label="Ir para experiência">
+          <span>role pra baixo</span>
+          <svg viewBox="0 0 24 40" aria-hidden="true"><path d="M12 3 C 10 14, 14 22, 12 35 M5 28 L12 36 L19 28" /></svg>
+        </a>
+      </section>
+
+      <section class="empresas" id="experiencia" aria-labelledby="empresas-title">
+        <header class="empresas__head">
+          <h2 class="empresas__title" id="empresas-title">Empresas que já <em>trabalhei</em></h2>
+        </header>
+        <ol class="jobs" data-jobs></ol>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__cta">Bora <em>conversar?</em></p>
+      <a
+        class="btn btn--ink btn--lg"
+        href="https://br.linkedin.com/in/arthur-vieira-de-souza-11985219a"
+        target="_blank"
+        rel="noopener"
+        >Me chama no LinkedIn <span aria-hidden="true">↗</span></a
+      >
+      <p class="footer__small">© <span data-year></span> Arthur Vieira de Souza</p>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
