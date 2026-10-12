@@ -167,6 +167,24 @@ em {
   background-size: 100% 1.5px;
 }
 
+/* celular: a barra aperta; nos bem estreitos só a marca e o LinkedIn cabem */
+@media (max-width: 440px) {
+  .nav__links {
+    gap: 11px;
+    font-size: 14px;
+  }
+
+  .nav__links .btn {
+    padding: 0.62em 0.8em;
+  }
+}
+
+@media (max-width: 370px) {
+  .nav__links > a:not(.btn) {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

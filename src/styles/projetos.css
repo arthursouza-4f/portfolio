@@ -1,0 +1,101 @@
+/* ---------- cada projeto (ladrilho de um lado, texto do outro) ---------- */
+
+.projs {
+  display: grid;
+  gap: clamp(96px, 11vw, 170px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.proj {
+  display: grid;
+  grid-template-columns: minmax(250px, 410px) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: center;
+  /* a prancha do topo rola até aqui: não fica escondido atrás do menu */
+  scroll-margin-top: 96px;
+}
+
+.proj--flip {
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 410px);
+}
+
+.proj--flip .stage {
+  order: 2;
+}
+
+.proj__meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.proj__name {
+  margin: 10px 0 18px;
+  font-weight: 500;
+  font-size: clamp(40px, 4.8vw, 66px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.proj__desc {
+  margin: 0 0 22px;
+  max-width: 58ch;
+  color: var(--ink-soft);
+}
+
+.proj__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+  margin: 22px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.proj__link {
+  color: var(--sea);
+  text-decoration: none;
+}
+
+.proj__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.proj__private {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+}
+
+.proj__private svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+@media (max-width: 860px) {
+  .proj,
+  .proj--flip {
+    grid-template-columns: 1fr;
+    gap: 64px;
+  }
+
+  .proj--flip .stage {
+    order: 0;
+  }
+
+  .proj .stage {
+    max-width: 340px;
+  }
+}

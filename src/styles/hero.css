@@ -18,6 +18,196 @@
   filter: none;
 }
 
+/* ---------- placa e pranchas na areia ---------- */
+
+/* textos desenhados dentro do SVG */
+.forecast__title,
+.forecast__foot {
+  font-family: var(--font-hand);
+  font-weight: 650;
+  fill: var(--ink);
+}
+
+.forecast__foot {
+  font-weight: 600;
+  fill: var(--ink-soft);
+}
+
+.forecast__small {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  fill: var(--muted);
+}
+
+.board__label {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* camada HTML por cima da cena: só as áreas de toque recebem o mouse */
+.hero__props {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero__boards {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.board-hit,
+.forecast-hit,
+.board-card {
+  position: absolute;
+  pointer-events: auto;
+}
+
+.board-hit {
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: none;
+  cursor: pointer;
+}
+
+.forecast-hit {
+  cursor: crosshair;
+}
+
+.forecast-tip {
+  position: absolute;
+  z-index: 1;
+  padding: 5px 9px 6px;
+  border-radius: 7px;
+  background: var(--ink);
+  color: var(--paper-hi);
+  font: 600 12.5px/1 var(--font-sans);
+  white-space: nowrap;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+
+.forecast-tip[hidden],
+.board-card[hidden] {
+  display: none;
+}
+
+.board-card {
+  z-index: 2;
+  width: min(290px, calc(100vw - 24px));
+  padding: 14px 18px 16px;
+  border: 2px solid var(--ink);
+  border-radius: 16px 14px 18px 13px;
+  background: var(--paper-hi);
+  box-shadow: 4px 5px 0 var(--ink);
+  transform-origin: var(--tail, 50%) 100%;
+  animation: card-pop 0.32s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+/* rabinho apontando para a prancha */
+.board-card::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--tail, 50%) - 8px);
+  bottom: -9px;
+  width: 14px;
+  height: 14px;
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper-hi);
+  transform: rotate(45deg);
+}
+
+@keyframes card-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.92) rotate(-1.5deg);
+  }
+}
+
+.board-card__meta {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.board-card__name {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.board-card__desc {
+  margin: 8px 0 12px;
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.board-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.board-card__tags li {
+  padding: 4px 10px 5px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px 900px 999px 950px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.board-card__link,
+.board-card__private,
+.board-card__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font: 600 20px/1 var(--font-hand);
+}
+
+.board-card__link {
+  color: var(--sea);
+  text-decoration: none;
+}
+
+.board-card__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.board-card__private {
+  color: var(--muted);
+}
+
+.board-card__hint {
+  color: var(--ink-soft);
+}
+
+.board-card__private svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+}
+
 .hero__copy {
   position: relative;
   z-index: 2;
@@ -125,5 +315,10 @@
 
   .hero__title {
     font-size: clamp(54px, 16vw, 84px);
+  }
+
+  /* a placa de commits ocupa o pé da tela no celular */
+  .hero__scroll {
+    display: none;
   }
 }

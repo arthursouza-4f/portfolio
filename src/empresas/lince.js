@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
 import { svgEl } from '../lib/svg.js';
-import { createTile, pencilText } from './tile.js';
+import { createTile, pencilText } from '../lib/tile.js';
 
 gsap.registerPlugin(DrawSVGPlugin);
 

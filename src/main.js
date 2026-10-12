@@ -3,10 +3,13 @@ import '@fontsource/instrument-serif/400-italic.css';
 import '@fontsource-variable/caveat';
 import './styles/base.css';
 import './styles/hero.css';
+import './styles/section.css';
 import './styles/empresas.css';
+import './styles/projetos.css';
 
 import { initHero } from './hero/hero.js';
 import { initEmpresas } from './empresas/empresas.js';
+import { initProjetos } from './projetos/projetos.js';
 
 document.querySelector('[data-year]').textContent = new Date().getFullYear();
 
@@ -20,4 +23,5 @@ const fontsReady = Promise.race([document.fonts.ready, new Promise((r) => setTim
 fontsReady.then(() => {
   initHero();
   initEmpresas();
+  initProjetos();
 });

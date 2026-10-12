@@ -7,7 +7,20 @@ gsap.registerPlugin(DrawSVGPlugin);
 
 export function initHero() {
   const hero = document.querySelector('.hero');
-  const scene = createHeroScene(hero.querySelector('.hero__scene'));
+  const textEls = hero.querySelectorAll('.hero__word, .hero__name, .hero__role-text, .hero__role-mark');
+  const scene = createHeroScene(hero.querySelector('.hero__scene'), {
+    overlay: hero.querySelector('.hero__props'),
+    // caixa que cobre só as letras do título (o bloco em si é bem mais largo)
+    avoid() {
+      const origin = hero.getBoundingClientRect();
+      const boxes = [...textEls].map((el) => el.getBoundingClientRect());
+      return {
+        left: Math.min(...boxes.map((b) => b.left)) - origin.left,
+        right: Math.max(...boxes.map((b) => b.right)) - origin.left,
+        bottom: Math.max(...boxes.map((b) => b.bottom)) - origin.top,
+      };
+    },
+  });
 
   const nav = document.querySelector('[data-intro="nav"]');
   const words = hero.querySelectorAll('.hero__word, .hero__name');
@@ -34,6 +47,10 @@ export function initHero() {
     .to(s, { grow: 1, duration: 1.65, ease: 'power2.inOut' }, 1.05)
     .to(s, { surferIn: 1, duration: 1.1, ease: 'back.out(1.3)' }, 2.25)
     .to(s, { birds: 1, duration: 1.2, ease: 'none' }, 2.1)
+    // a placa sobe da areia, o grid se preenche e as pranchas caem fincando
+    .to(s, { sign: 1, duration: 0.9, ease: 'back.out(1.8)' }, 1.5)
+    .to(s, { grid: 1, duration: 1.3, ease: 'power1.inOut' }, 1.9)
+    .to(s, { boards: 1, duration: 1.3, ease: 'none' }, 1.75)
     .from(scroll, { opacity: 0, y: 10, duration: 0.6 }, 3.2);
 
   // só em desenvolvimento: permite inspecionar quadros específicos

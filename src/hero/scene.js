@@ -1,16 +1,22 @@
 import { svgEl, setAttrs, smoothPath, rng, r2, clamp } from '../lib/svg.js';
 import { doodleFilter, stippleFade, stipplePattern, boil, reducedMotion } from '../lib/doodle.js';
 import { createWave, SEA_LEVEL, DESIGN_RIGHT, DESIGN_TOP } from './wave.js';
+import { createForecast } from './forecast.js';
+import { createBoards } from './boards.js';
 
 /*
  * Cena do topo: linha da areia (laranja) que vira mar (azul), a onda
- * grande à direita e o surfista. Tudo em SVG; o laço de animação roda
- * a ~30 quadros por segundo (é traço "feito à mão", não precisa de 120).
+ * grande à direita e o surfista. Na areia, a placa com o grid de commits
+ * e as pranchas dos projetos (com uma camada HTML por cima, `overlay`,
+ * para o mouse/teclado). Tudo em SVG; o laço de animação roda a ~30
+ * quadros por segundo (é traço "feito à mão", não precisa de 120).
+ *
+ * `avoid()` devolve a caixa do título, para nada ser desenhado por cima.
  */
 
 const FPS = 30;
 
-export function createHeroScene(svg) {
+export function createHeroScene(svg, { overlay, avoid } = {}) {
   const defs = svgEl('defs', {}, svg);
 
   stipplePattern(defs, 'wave-dots-dense', { size: 90, density: 0.32, color: '#1f66d1', seed: 3, dot: [0.5, 1.05] });
@@ -20,6 +26,8 @@ export function createHeroScene(svg) {
   const lineBoil = doodleFilter(defs, 'hero-line-boil', { shade: false, wobble: 2.2, region: { x: -50, y: -50, width: 5000, height: 3000 } });
   const waveBoil = doodleFilter(defs, 'hero-wave-boil', { shade: false, wobble: 2.4 });
   const figure = doodleFilter(defs, 'hero-figure', { shade: true, rim: 6, soft: 2, wobble: 1.8 });
+  const prop = doodleFilter(defs, 'hero-prop', { shade: true, rim: 4, soft: 1.6, wobble: 1.5 });
+  const soft = doodleFilter(defs, 'hero-soft', { shade: false, wobble: 0.9 });
 
   const revealClip = svgEl('clipPath', { id: 'hero-reveal' }, defs);
   const revealRect = svgEl('rect', { x: -20, y: -20, width: 0, height: 4000 }, revealClip);
@@ -41,6 +49,12 @@ export function createHeroScene(svg) {
   const ripples = svgEl('g', { stroke: 'var(--sea)', 'stroke-width': 2, opacity: 0.7 }, lines);
   const rippleEls = Array.from({ length: 7 }, () => svgEl('path', {}, ripples));
 
+  // ---------- na areia: pranchas + placa de previsão ----------
+  // (no celular a placa fica na frente, então é desenhada por último)
+  const props = svgEl('g', {}, svg);
+  const boards = createBoards({ parent: props, defs, overlay });
+  const forecast = createForecast({ parent: props, defs, overlay });
+
   // ---------- gaivotas ----------
   const birds = svgEl(
     'g',
@@ -58,10 +72,10 @@ export function createHeroScene(svg) {
   const waveFrontT = svgEl('g', {}, waveFront);
   const wave = createWave({ back: waveBackT, mid: waveMidT, front: waveFrontT, defs, idPrefix: 'wave' });
 
-  boil(svg, [lineBoil.turbulence, waveBoil.turbulence, figure.turbulence]);
+  boil(svg, [lineBoil.turbulence, waveBoil.turbulence, figure.turbulence, prop.turbulence, soft.turbulence]);
 
   // ---------- estado animado pela intro (GSAP) ----------
-  const state = { ground: 0, dots: 0, grow: 0.02, surferIn: 0, birds: 0, prints: 0 };
+  const state = { ground: 0, dots: 0, grow: 0.02, surferIn: 0, birds: 0, prints: 0, sign: 0, grid: 0, boards: 0 };
 
   let W = 0;
   let H = 0;
@@ -149,6 +163,24 @@ export function createHeroScene(svg) {
     }
     star.setAttribute('d', smoothPath(starPts, { closed: true, k: 0.4 }));
 
+    // placa embaixo do título; as pranchas no resto da areia até a beira d'água
+    const u = clamp(Math.min(W / 1440, H / 900), 0.72, 1.25);
+    const gutter = clamp(W * 0.04, 16, 56);
+    const copy = avoid?.() ?? null;
+    const edge = shore + 10 * u;
+    const maxW = mobile ? W - gutter * 2 : Math.min(340 * u, edge - gutter - boards.span(u) - 26 * u);
+    const sign = forecast.layout({ W, H, u, horizon, gutter, mobile, copy, maxW });
+    boards.layout({
+      W,
+      H,
+      u,
+      horizon,
+      mobile,
+      copy,
+      from: mobile ? gutter : sign.right + 26 * u,
+      to: mobile ? Math.max(shore + 30, gutter + 110 * u) : edge,
+    });
+
     render(lastT, 0);
   }
 
@@ -204,6 +236,9 @@ export function createHeroScene(svg) {
     waveBack.setAttribute('opacity', waveAlpha);
     waveFront.setAttribute('opacity', waveAlpha);
     wave.update(t, dt, { grow: state.grow, surferIn: state.surferIn });
+
+    forecast.update(state);
+    boards.update(t, dt, state);
   }
 
   // ---------- laço ----------
@@ -260,7 +295,7 @@ export function createHeroScene(svg) {
 
   layout();
   if (reducedMotion) {
-    Object.assign(state, { ground: 1, dots: 1, grow: 1, surferIn: 1, birds: 1, prints: 1 });
+    Object.assign(state, { ground: 1, dots: 1, grow: 1, surferIn: 1, birds: 1, prints: 1, sign: 1, grid: 1, boards: 1 });
     lastT = 2.2;
     render(lastT, 0);
   }

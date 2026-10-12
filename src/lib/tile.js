@@ -1,5 +1,5 @@
-import { svgEl, sketchRoundRect } from '../lib/svg.js';
-import { doodleFilter, boil } from '../lib/doodle.js';
+import { svgEl, sketchRoundRect } from './svg.js';
+import { doodleFilter, boil } from './doodle.js';
 
 /*
  * "Ladrilho" de cada logo: um quadrado 100×100 com cantos arredondados,
